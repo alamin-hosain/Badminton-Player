@@ -1,8 +1,10 @@
 
 
+
 document.getElementById('player-select').addEventListener('click', function (event) {
     const selectPlayer = event.target.parentNode;
     const playerName = selectPlayer.querySelector('.card-title').innerText;
+    const btnSelected = selectPlayer.querySelector('.btn');
 
     const newPlayer = document.createElement('li');
     newPlayer.innerText = playerName;
@@ -13,19 +15,15 @@ document.getElementById('player-select').addEventListener('click', function (eve
 
     if (selecTedTotal.length < 5) {
         selectedPlayer.appendChild(newPlayer);
+        btnSelected.disabled = 'disabled';
+
     }
     else {
         alert('You Only Can Add Upto 5 Players')
     }
 })
 
-function getInputFieldValuById(inputId) {
-    const inputVieldValueSelect = document.getElementById(inputId);
-    const inputVieldValueSelectString = inputVieldValueSelect.value;
-    const inputValue = parseInt(inputVieldValueSelectString);
 
-    return inputValue;
-}
 
 document.getElementById('calculate').addEventListener('click', function (event) {
 
@@ -35,10 +33,25 @@ document.getElementById('calculate').addEventListener('click', function (event) 
     const selectedCurrentPlayer = selecTedTotalPlayer.length;
 
     const budgetPerPlayer = getInputFieldValuById('budget-per-player');
-
-
     const playerExpense = budgetPerPlayer * selectedCurrentPlayer;
 
-    const playerExpentElement = document.getElementById('player-total-expense');
-    playerExpentElement.innerText = playerExpense;
+    setElementValueByID('player-total-expense', playerExpense)
+})
+
+
+
+
+document.getElementById('calculate-total').addEventListener('click', function () {
+    const managerExpense = getInputFieldValuById('manager-expense');
+    const coachExpense = getInputFieldValuById('coach-expense');
+    const playerExpenseElement = document.getElementById('player-total-expense').innerText;
+    const playerTotalExpense = parseInt(playerExpenseElement);
+
+
+    const managerAndCoachExpense = managerExpense + coachExpense;
+    const totalExpense = playerTotalExpense + managerAndCoachExpense;
+
+    setElementValueByID('total-expense', totalExpense);
+
+
 })
